@@ -199,7 +199,7 @@ export default function Home() {
           >
             <div ref={nameRef} className="hero-name-container">
               <VariableProximity
-                label="Adimalla Naga Manohar"
+                label="Manohar Adimalla"
                 fromFontVariationSettings="'wght' 300, 'opsz' 9"
                 toFontVariationSettings="'wght' 700, 'opsz' 40"
                 containerRef={nameRef as React.RefObject<HTMLDivElement>}
