@@ -415,7 +415,7 @@ export default function Home() {
 
             {/* Social icons */}
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a href="https://github.com/Manohar9111"             target="_blank" rel="noopener noreferrer" className="social-button"><FaGithub size={22} /></a>
+              <a href="https://github.com/manoharadimalla"             target="_blank" rel="noopener noreferrer" className="social-button"><FaGithub size={22} /></a>
               <a href="https://www.linkedin.com/in/manohar-adimalla"           target="_blank" rel="noopener noreferrer" className="social-button"><FaLinkedin size={22} /></a>
               <a href="https://x.com/manohar_911_"            target="_blank" rel="noopener noreferrer" className="social-button"><FaTwitter size={22} /></a>
               <a href="https://www.instagram.com/manohar_911_"          target="_blank" rel="noopener noreferrer" className="social-button"><FaInstagram size={22} /></a>
