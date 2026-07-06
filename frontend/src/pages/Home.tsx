@@ -85,10 +85,10 @@ export default function Home() {
   };
 
   const experience = [
-    { role: 'MOSS Web Development Team Member',  period: '2024 – Present', description: 'Contributing to web development projects and mentoring junior developers.' },
-    { role: 'Summer School Backend Instructor',  period: '2024',           description: 'Teaching backend development concepts and best practices to students.' },
-    { role: 'Event Management Committee',        period: '2023 – Present', description: 'Organizing and managing technical events and hackathons.' },
-    { role: 'CTF Organizer',                     period: '2023 – Present', description: 'Organizing Capture The Flag cybersecurity competitions.' },
+    { role: 'MOSS Web Development Team Member',  period: '2025 – Present', description: 'Contributing to web development projects and mentoring junior developers.' },
+    { role: 'Summer School Backend Instructor',  period: '2026',           description: 'Teaching backend development concepts and best practices to students.' },
+    { role: 'Event Management Committee',        period: '2025 – Present', description: 'Organizing and managing technical events and hackathons.' },
+    { role: 'CTF Organizer',                     period: '2025 – Present', description: 'Organizing Capture The Flag cybersecurity competitions.' },
   ];
 
   useEffect(() => {
@@ -232,10 +232,10 @@ export default function Home() {
             </div>
 
             <div className="hero-socials">
-              <a href="https://github.com"    target="_blank" rel="noopener noreferrer" className="social-link"><FaGithub /></a>
-              <a href="https://linkedin.com"  target="_blank" rel="noopener noreferrer" className="social-link"><FaLinkedin /></a>
-              <a href="https://twitter.com"   target="_blank" rel="noopener noreferrer" className="social-link"><FaTwitter /></a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-link"><FaInstagram /></a>
+              <a href="https://github.com/manoharadimalla"    target="_blank" rel="noopener noreferrer" className="social-link"><FaGithub /></a>
+              <a href="https://www.linkedin.com/in/manohar-adimalla"  target="_blank" rel="noopener noreferrer" className="social-link"><FaLinkedin /></a>
+              <a href="https://x.com/manohar_911_"   target="_blank" rel="noopener noreferrer" className="social-link"><FaTwitter /></a>
+              <a href="https://instagram.com/manohar_911_" target="_blank" rel="noopener noreferrer" className="social-link"><FaInstagram /></a>
               <a href="mailto:nagamanohar859@gmail.com" className="social-link"><SiGmail /></a>
             </div>
           </motion.div>
