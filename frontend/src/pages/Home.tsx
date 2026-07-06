@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import PillNav from '@/components/PillNav';
 import VariableProximity from '@/components/VariableProximity';
@@ -31,6 +31,35 @@ const ManoharLogo = (
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
+
+  // Contact form state
+  type FormStatus = 'idle' | 'sending' | 'success' | 'error';
+  const [formStatus, setFormStatus] = useState<FormStatus>('idle');
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    try {
+      const res = await fetch('https://formspree.io/f/maqgvgba', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setFormStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setFormStatus('error');
+      }
+    } catch {
+      setFormStatus('error');
+    }
+  };
 
   const projects = [
     {
@@ -327,18 +356,62 @@ export default function Home() {
               I'm always interested in hearing about new projects and opportunities. Feel free to reach out!
             </p>
 
-            {/* Formspree — sends email silently in the background */}
-            <form
-              action="https://formspree.io/f/xbjnqzzn"
-              method="POST"
-              className="contact-form"
-              style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem', width: '100%' }}
-            >
-              <input  type="text"  name="name"    placeholder="Your Name"    required className="form-input" />
-              <input  type="email" name="email"   placeholder="Your Email"   required className="form-input" />
-              <textarea           name="message" placeholder="Your Message" required rows={4} className="form-textarea" />
-              <Button type="submit" className="submit-btn">Send Message</Button>
-            </form>
+            {/* Formspree AJAX form — stays on page, shows success/error */}
+            {formStatus === 'success' ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="form-success"
+              >
+                <div className="form-success-icon">✓</div>
+                <h3 className="form-success-title">Message Sent!</h3>
+                <p className="form-success-text">Thanks for reaching out. I'll get back to you as soon as possible.</p>
+                <button className="form-success-reset" onClick={() => setFormStatus('idle')}>
+                  Send another message
+                </button>
+              </motion.div>
+            ) : (
+              <form
+                onSubmit={handleFormSubmit}
+                className="contact-form"
+                style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem', width: '100%' }}
+              >
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                  className="form-input"
+                  value={formData.name}
+                  onChange={handleFormChange}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Your Email"
+                  required
+                  className="form-input"
+                  value={formData.email}
+                  onChange={handleFormChange}
+                />
+                <textarea
+                  name="message"
+                  placeholder="Your Message"
+                  required
+                  rows={4}
+                  className="form-textarea"
+                  value={formData.message}
+                  onChange={handleFormChange}
+                />
+                {formStatus === 'error' && (
+                  <p className="form-error">Something went wrong. Please try again or email me directly.</p>
+                )}
+                <Button type="submit" className="submit-btn" disabled={formStatus === 'sending'}>
+                  {formStatus === 'sending' ? 'Sending…' : 'Send Message'}
+                </Button>
+              </form>
+            )}
 
             {/* Social icons */}
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
