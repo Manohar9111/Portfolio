@@ -22,6 +22,8 @@ interface TiltedCardProps {
   showTooltip?: boolean;
   overlayContent?: React.ReactNode;
   displayOverlayContent?: boolean;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
 }
 
 export default function TiltedCard({
@@ -37,7 +39,9 @@ export default function TiltedCard({
   showMobileWarning = true,
   showTooltip = true,
   overlayContent = null,
-  displayOverlayContent = false
+  displayOverlayContent = false,
+  loading = 'lazy',
+  fetchpriority = 'auto'
 }: TiltedCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -119,6 +123,8 @@ export default function TiltedCard({
           src={imageSrc}
           alt={altText}
           className="tilted-card-img"
+          loading={loading}
+          fetchPriority={fetchpriority}
           style={{
             width: imageWidth,
             height: imageHeight

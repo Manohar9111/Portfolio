@@ -7,30 +7,15 @@ import LiquidEther from '@/components/LiquidEther';
 import { Button } from '@/components/ui/button';
 import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { SiGmail } from 'react-icons/si';
+import { navItems, liquidEtherConfig } from '@/lib/constants';
 import './Home.css';
 
-const navItems = [
-  { label: 'About',      href: '#about' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects',   href: '#projects' },
-  { label: 'Contact',    href: '#contact' },
-];
 
-// Original "M" logo (matches the old design)
-const ManoharLogo = (
-  <div style={{
-    width: 36, height: 36, borderRadius: '50%',
-    background: 'rgba(255,255,255,0.15)',
-    border: '1px solid rgba(255,255,255,0.3)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-  }}>
-    <span style={{ color: '#fff', fontWeight: 900, fontSize: '1.1rem', letterSpacing: '-1px' }}>M</span>
-  </div>
-);
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
 
   // Contact form state
   type FormStatus = 'idle' | 'sending' | 'success' | 'error';
@@ -67,14 +52,14 @@ export default function Home() {
       description: 'A full-featured job board platform with JWT authentication, role-based access control, and advanced search capabilities.',
       image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=500&fit=crop',
       tags: ['Express', 'Node.js', 'PostgreSQL', 'JWT', 'Multer'],
-      link: '#',
+      github: 'https://github.com/manoharadimalla/apex-jobs-app',
     },
     {
       title: 'Real-Time Multiplayer Quiz',
       description: 'An interactive multiplayer quiz platform with real-time synchronization using WebGL and GSAP animations.',
       image: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=500&h=500&fit=crop',
       tags: ['React', 'Socket.io', 'MongoDB', 'WebGL', 'GSAP'],
-      link: '#',
+      github: 'https://github.com/manoharadimalla/Quiz-App-MERN-stack',
     },
   ];
 
@@ -123,19 +108,20 @@ export default function Home() {
 
       {/* ── Fixed full-screen interactive background ── */}
       <LiquidEther
-        colors={['#111111', '#555555', '#cccccc']}
-        mouseForce={25}
-        cursorSize={120}
-        autoDemo={true}
-        autoSpeed={0.4}
-        autoIntensity={2.0}
-        resolution={0.5}
+        {...liquidEtherConfig}
         style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: 0 }}
       />
 
       {/* ── Navbar: original "M" logo + sections ── */}
       <PillNav
-        logo={ManoharLogo}
+        logo={<div style={{
+          width: 36, height: 36, borderRadius: '50%',
+          background: 'rgba(255,255,255,0.15)',
+          border: '1px solid rgba(255,255,255,0.3)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <span style={{ color: '#fff', fontWeight: 900, fontSize: '1.1rem', letterSpacing: '-1px' }}>M</span>
+        </div>}
         logoAlt="Manohar Logo"
         items={navItems}
         baseColor="#ffffff"
@@ -175,7 +161,7 @@ export default function Home() {
             className="hero-image"
           >
             <TiltedCard
-              imageSrc="/WhatsAppImage2026-07-05at3.35.18PM.jpeg"
+              imageSrc="/profile-photo.jpg"
               altText="Manohar Adimalla"
               captionText="Manohar Adimalla"
               containerHeight="360px"
@@ -187,6 +173,8 @@ export default function Home() {
               showMobileWarning={false}
               showTooltip={false}
               displayOverlayContent={false}
+              loading="eager"
+              fetchpriority="high"
             />
           </motion.div>
 
@@ -209,12 +197,12 @@ export default function Home() {
               />
             </div>
 
-            <div className="hero-title-container" ref={containerRef}>
+            <div className="hero-title-container" ref={titleRef}>
               <VariableProximity
                 label="Full-Stack Developer"
                 fromFontVariationSettings="'wght' 400, 'opsz' 9"
                 toFontVariationSettings="'wght' 900, 'opsz' 72"
-                containerRef={containerRef as React.RefObject<HTMLDivElement>}
+                containerRef={titleRef as React.RefObject<HTMLDivElement>}
                 radius={150}
                 falloff="exponential"
                 className="hero-title"
@@ -261,6 +249,7 @@ export default function Home() {
       {/* ── Skills ── */}
       <section id="skills" className="skills-section">
         <div className="section-container">
+          <h2 className="section-subtitle">Expertise</h2>
           <h2 className="section-title">
             Skills &amp; Technologies
           </h2>
@@ -280,7 +269,7 @@ export default function Home() {
       {/* ── Experience ── */}
       <section id="experience" className="experience-section">
         <div className="section-container">
-          <h2 className="section-subtitle">Experience</h2>
+          <h2 className="section-subtitle">My Journey</h2>
           <h2 className="section-title">
             Experience
           </h2>
@@ -322,6 +311,7 @@ export default function Home() {
                   showMobileWarning={false}
                   showTooltip={true}
                   displayOverlayContent={true}
+                  loading="lazy"
                   overlayContent={
                     <div className="project-overlay">
                       <h3>{project.title}</h3>
@@ -339,7 +329,7 @@ export default function Home() {
             ))}
           </div>
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.6 }} className="view-all-projects">
-            <Button className="view-all-btn">View All Projects</Button>
+            <a href="/projects" className="view-all-btn">View All Projects</a>
           </motion.div>
         </div>
       </section>

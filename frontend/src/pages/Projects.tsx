@@ -11,25 +11,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/sonner';
 import { FaGithub, FaArrowLeft, FaExternalLinkAlt } from 'react-icons/fa';
+import { navItemsWithProjects, liquidEtherConfig } from '@/lib/constants';
 import './Projects.css';
 
-const navItems = [
-  { label: 'About',      href: '/#about' },
-  { label: 'Experience', href: '/#experience' },
-  { label: 'Projects',   href: '/projects' },
-  { label: 'Contact',    href: '/#contact' },
-];
 
-const ManoharLogo = (
-  <div style={{
-    width: 36, height: 36, borderRadius: '50%',
-    background: 'rgba(255,255,255,0.15)',
-    border: '1px solid rgba(255,255,255,0.3)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-  }}>
-    <span style={{ color: '#fff', fontWeight: 900, fontSize: '1.1rem', letterSpacing: '-1px' }}>M</span>
-  </div>
-);
 
 const contactFormSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -55,7 +40,7 @@ const allProjects = [
       'Responsive Design',
       'RESTful API'
     ],
-    github: '#',
+    github: 'https://github.com/manoharadimalla/apex-jobs-app',
     live: '#'
   },
   {
@@ -72,24 +57,7 @@ const allProjects = [
       'Leaderboard System',
       'Question Management'
     ],
-    github: '#',
-    live: '#'
-  },
-  {
-    id: 3,
-    title: 'Expense Tracker REST API',
-    description: 'A robust REST API for expense tracking with JWT authentication, role-based access, and comprehensive expense management. Built with modern backend practices and database optimization.',
-    image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=600&fit=crop',
-    tags: ['Node.js', 'Express', 'MongoDB', 'JWT', 'REST API'],
-    features: [
-      'JWT Authentication',
-      'Expense CRUD Operations',
-      'Category Management',
-      'Expense Analytics',
-      'User Profiles',
-      'API Documentation'
-    ],
-    github: '#',
+    github: 'https://github.com/manoharadimalla/Quiz-App-MERN-stack',
     live: '#'
   }
 ];
@@ -108,11 +76,17 @@ export default function Projects() {
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
     try {
-      // Simulate form submission
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log('Form data:', data);
-      toast.success('Message sent successfully! I\'ll get back to you soon.');
-      reset();
+      const res = await fetch('https://formspree.io/f/maqgvgba', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        toast.success('Message sent successfully! I\'ll get back to you soon.');
+        reset();
+      } else {
+        toast.error('Failed to send message. Please try again.');
+      }
     } catch (error) {
       toast.error('Failed to send message. Please try again.');
     } finally {
@@ -123,20 +97,21 @@ export default function Projects() {
   return (
     <div className="projects-container">
       <LiquidEther
-        colors={['#111111', '#555555', '#cccccc']}
-        mouseForce={25}
-        cursorSize={120}
-        autoDemo={true}
-        autoSpeed={0.4}
-        autoIntensity={2.0}
-        resolution={0.5}
+        {...liquidEtherConfig}
         style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: 0 }}
       />
 
       <PillNav
-        logo={ManoharLogo}
+        logo={<div style={{
+          width: 36, height: 36, borderRadius: '50%',
+          background: 'rgba(255,255,255,0.15)',
+          border: '1px solid rgba(255,255,255,0.3)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <span style={{ color: '#fff', fontWeight: 900, fontSize: '1.1rem', letterSpacing: '-1px' }}>M</span>
+        </div>}
         logoAlt="Manohar Logo"
-        items={navItems}
+        items={navItemsWithProjects}
         activeHref="/projects"
         baseColor="#ffffff"
         pillColor="rgba(255,255,255,0.1)"
@@ -215,6 +190,7 @@ export default function Projects() {
                     scaleOnHover={1.05}
                     showMobileWarning={false}
                     showTooltip={true}
+                    loading="lazy"
                   />
                 </div>
 

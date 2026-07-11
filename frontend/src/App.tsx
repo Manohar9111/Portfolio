@@ -6,6 +6,8 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Projects from "./pages/Projects";
+import Analytics from "./components/Analytics";
+import PWA from "./components/PWA";
 
 
 function Router() {
@@ -29,11 +31,13 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider
-        defaultTheme="light"
+        defaultTheme="dark"
         // switchable
       >
         <TooltipProvider>
           <Toaster />
+          <Analytics measurementId={import.meta.env.VITE_GA_MEASUREMENT_ID} />
+          <PWA />
           <Router />
         </TooltipProvider>
       </ThemeProvider>
